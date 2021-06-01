@@ -195,5 +195,5 @@
             margin-bottom: 8px;
         }
     }
-    </style>
+</style>
 <!-- End Footer -->
