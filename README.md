@@ -5,6 +5,6 @@ If you copy the code and want Matomo, just download it. Otherwise, delete the co
 
 # Todo
 * Images
-** The four earths
-** The four favicons
-** `images/*`
+    * The four earths
+    * The four favicons
+    * `images/*`
