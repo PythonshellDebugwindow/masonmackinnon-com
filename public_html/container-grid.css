@@ -1,0 +1,26 @@
+.container-grid
+{
+    width: 100%;
+    height: 100%;
+    
+    display: grid;
+    align-items: center;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+}
+.container-grid .item
+{
+    box-sizing: border-box;
+    border-collapse: collapse;
+    padding: 10px;
+    height: 100%;
+    border: 1px solid #000;
+}
+.container-grid .item h2
+{
+    text-align: center;
+}
+.container-grid .item p
+{
+    text-align: center;
+    text-align-last: center;
+}
