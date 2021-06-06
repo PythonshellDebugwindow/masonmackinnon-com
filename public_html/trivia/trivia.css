@@ -1,0 +1,110 @@
+.right
+{
+    position: absolute;
+    right: 0;
+    transform: translate(-100%, -10px);
+}
+
+label
+{
+    font-size: 1.2em;
+}
+input[type="number"]
+{
+    width: 3em;
+    padding: 5px;
+    font-size: 1em;
+}
+
+input[type="submit"],
+#end
+{
+    padding: 10px 20px;
+    border: 1px solid #000;
+    border-radius: 10px;
+    background: #fff;
+    transition: background 0.3s;
+    font-size: 1.2em;
+}
+input[type="submit"]:hover,
+#end:hover
+{
+    background: #ddd;
+}
+
+.questions
+{
+    margin: 0 50px;
+    height: 500px;
+    display: grid;
+    grid-template-columns: 50% 50%;
+    grid-template-rows: 50% 50%;
+    border: 1px solid #000;
+}
+.questions .answer
+{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #999;
+    background: #fff;
+    cursor: pointer;
+}
+.questions .answer span
+{
+    font-size: 2em;
+}
+.questions .guess-right
+{
+    background: #0f0;
+}
+.questions .guess-wrong
+{
+    background: #f00;
+}
+
+@media (min-width: 651px)
+{
+    .questions .answer:hover
+    {
+        background: #ddd;
+    }
+    .questions .guess-wrong:hover
+    {
+        background: #d00;
+    }
+    .questions .guess-right:hover
+    {
+        background: #0d0;
+    }
+}
+
+.endgame
+{
+    display: none:
+    margin: 0 50px;
+    height: 500px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #000;
+}
+.endgame h2
+{
+    font-size: 4em;
+}
+
+.error
+{
+    color: #f00;
+    background: #ff0;
+}
+
+@media (max-width: 650px)
+{
+    .questions
+    {
+        grid-template-rows: repeat(4, 25%);
+        grid-template-columns: 100%;
+    }
+}
