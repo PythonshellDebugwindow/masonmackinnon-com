@@ -49,7 +49,7 @@
         </div>
         <div class="sec copywrong">
             <h2>License</h2>
-            <p>Do whatever you want with the code, or whatever you can find of it. Mason<wbr />Mac<wbr />Kinnon.Com has no warranty. This site is by Mason MacKinnon 2021-<?php echo date("Y"); ?>.</p>
+            <p>Do whatever you want with <a href="https://github.com/PythonshellDebugwindow/masonmackinnon-com">the code</a>. Mason<wbr />Mac<wbr />Kinnon.Com has no warranty. This site is by Mason MacKinnon 2021-<?php echo date("Y"); ?>.</p>
         </div>
     </div>
 </footer>
