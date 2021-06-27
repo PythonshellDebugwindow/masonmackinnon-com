@@ -40,8 +40,12 @@
             <p>A LISP-like language implemented in Python and Pygame. Stands for GUI Processing, although it really isn't very good for making GUIS.</p>
         </div>
         <div class="item">
-            <h2><a href="https://www.github.com/PythonshellDebugwindow/esolangs" rel="noopener noreferrer">Esolangs</a></h2>
-            <p>This is a collection of my implementations of esolangs (esoteric programming languages), excluding GUIP and a few others.</p>
+            <h2><a href="https://www.github.com/PythonshellDebugwindow/esolangs" rel="noopener noreferrer">Esolangs on GitHub</a></h2>
+            <p>This is a collection of my implementations of esolangs (esoteric programming languages) on Github, excluding GUIP and a few others.</p>
+        </div>
+        <div class="item">
+            <h2><a href="esolangs.php" rel="noopener noreferrer">Esolangs Online</a></h2>
+            <p>This is a collection of some of my JavaScript implementations of esolangs (esoteric programming languages), right on this website.</p>
         </div>
         <div class="item">
             <h2><a href="/">MasonMackinnon.Com</a></h2>
