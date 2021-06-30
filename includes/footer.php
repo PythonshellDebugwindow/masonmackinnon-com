@@ -5,6 +5,7 @@
             <h2>Quick Links</h2>
             <ul>
                 <li><a href="/about/">About</a></li>
+                <li><a href="/blog/">Blog</a></li>
                 <li><a href="/projects/">Projects</a></li>
                 <li><a href="/trivia/">Trivia</a></li>
                 <li><a href="/misc/">Miscellany</a></li>
@@ -30,15 +31,15 @@
                     Canada City, Canada, Earth</span>
                 </li>
                 <li>
-                    <span><img src="/images/phone.png"></span>
-                    <a href="tel:+1555-555-0123">+1 (555) 555-0123</span>
+                    <span><img src="/images/phone.png" alt="Phone"></span>
+                    <a href="tel:+1555-555-0123">+1 (555) 555-0123</a>
                 </li>
                 <li>
-                    <span><img src="/images/envelope.png"></span>
+                    <span><img src="/images/envelope.png" alt="Email"></span>
                     <a href="mailto:pythonshelldebugwindow@gmail.com" rel="noopener noreferrer">Email Me</a>
                 </li>
                 <li>
-                    <span><img src="/images/book.png"></span>
+                    <span><img src="/images/book.png" alt="Contact"></span>
                     <a href="/contact/">Con<wbr />tact Page</a>
                 </li>
             </ul>
@@ -196,4 +197,5 @@
         }
     }
 </style>
-<!-- End Footer -->
+</body>
+</html>
