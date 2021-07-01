@@ -36,7 +36,8 @@
             fail();
         
         $id = $_GET['p'];
-        $q = "SELECT title, content, time FROM blog WHERE id = $id";
+        $db = isset($_GET['t']) ? 'tlao' : 'blog';
+        $q = "SELECT title, content, time FROM $db WHERE id = $id";
         $r = mysqli_query($dbc, $q);
         if(!$r)
             fail();
@@ -60,7 +61,9 @@
         }
     }
     
-    $title = $ptitle . ' | Blog';
+    $isTLAO = $_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['t']);
+    $b = ($isTLAO ? 'Two Languages At Once' : 'Blog');
+    $title = "$ptitle | $b";
     include_once('../../includes/header.php');
 ?>
 <section>
@@ -71,7 +74,7 @@
     <div class="posts">
         <?php
             echo '<div class="post">';
-            echo '<h2>' . $ptitle . "</h2>";
+            // echo '<h2>' . $ptitle . "</h2>";
             echo '<p>' . $pcontent . '</p>';
             echo '</div>';
             
@@ -80,6 +83,12 @@
                 echo '<br /><p>Post #' . $id . ' &bull; ';
                 echo "$timeStrDate at $timeStrTime</p>";
             }
+            
+            $u = '/blog/';
+            if($isTLAO)
+                $u .= '?t';
+            echo '<a href="' . $u . '">';
+            echo '<img class="arrow" src="../images/arrow-left.png">Go Back</a>';
         ?>
     </div>
 </section>
@@ -131,5 +140,10 @@
         padding: 10px;
         background: #eee;
     }
+    .arrow
+    {
+        height: 0.8em;
+        margin-right: 5px;
+    }
 </style>
-<?php include_once('../../includes/footer.php') ?>
+<?php include_once('../../includes/footer.php'); ?>
