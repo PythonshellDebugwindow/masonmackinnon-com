@@ -182,7 +182,7 @@
     {
         footer
         {
-            padding: 7px;
+            padding: 21px 7px;
         }
         footer .container .quicklinks ul
         {
