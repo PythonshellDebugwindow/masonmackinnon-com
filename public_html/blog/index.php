@@ -1,11 +1,17 @@
 <?php
-    $title = 'Blog';
+    $isTLAO = $_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['t']);
+    $title = $isTLAO ? 'Two Languages At Once' : 'Blog';
     include_once("../../includes/header.php")
 ?>
 <section>
     <div>
-        <h1 class="center-text darkred">Blog</h1>
-        <p class="justify">This is a blog about programs, programming, and programming languages. For a programming tutorial, see <a href="two.php">2LAO</a>.</p>
+        <?php if($isTLAO) { ?>
+            <h1 class="center-text darkred">Two Languages At Once</h1>
+            <p class="justify">This is a programming tutorial in which you will learn two of the computer's languages, Python and JavaScript, simultaneously, even if it doesn't learn any of yours. For a blog about programs, programming, and programming languages, see <a href="?">the Blog</a>.</p>
+        <?php } else { ?>
+            <h1 class="center-text darkred">Blog</h1>
+            <p class="justify">This is a blog about programs, programming, and programming languages. For a programming tutorial in which you will learn two languages at once, see <a href="?t">Two Languages At Once</a>.</p>
+        <?php } ?>
     </div>
     
     <div class="posts">
@@ -33,9 +39,14 @@
             if(!$r)
                 fail();
             
-            $q = 'SELECT id, title, content, time FROM blog';
+            $q = 'SELECT id, title, content, time FROM ';
             if($_SERVER['REQUEST_METHOD'] == 'GET')
             {
+                if(isset($_GET['t']))
+                    $q .= 'tlao';
+                else
+                    $q .= 'blog';
+                
                 $validCols = array('id', 'time');
                 $validDirs = array('ASC', 'DESC');
                 if(isset($_GET['scol']))
@@ -60,11 +71,12 @@
                 else
                     $q .= ' ASC';
             }
+            else
+                $q .= 'blog';
             
             $r = mysqli_query($dbc, $q);
             if(!$r)
                 fail();
-            
             while($row = mysqli_fetch_array($r, MYSQLI_ASSOC))
             {
                 $newFmtDate = 'F d, Y';
@@ -77,7 +89,10 @@
                 echo '<div class="post">';
                 echo '<h2>' . $row['title'] . "</h2>";
                 echo '<p>' . shorten($row['content']) . '</p>';
-                echo '<p><a href="post.php?p=' . $row['id'] . '">Read More</a>';
+                echo '<p><a href="post.php?p=' . $row['id'];
+                if(isset($_GET['t']))
+                    echo '&t';
+                echo '">Read More</a>';
                 echo '<p>Post #' . $row['id'] . ' &bull; ';
                 echo "$timeStrDate at $timeStrTime</p>";
                 echo '</div>';
