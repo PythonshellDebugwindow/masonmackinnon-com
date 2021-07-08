@@ -80,7 +80,7 @@
             
             if($foundPost)
             {
-                echo '<br /><p>Post #' . $id . ' &bull; ';
+                echo '<br /><p class="pid">Post #' . $id . ' &bull; ';
                 echo "$timeStrDate at $timeStrTime</p>";
             }
             
@@ -133,12 +133,29 @@
     {
         border-right: 1px solid #000;
     }
-    pre
+    .post pre,
+    .post code
+    {
+        font-family: "Courier New", "Courier", monospace;
+        background: #eee;
+    }
+    .post pre
     {
         display: block;
-        font-family: "Courier New", "Courier", monospace;
         padding: 10px;
-        background: #eee;
+    }
+    .post code
+    {
+        padding: 2px;
+        font-size: 0.9em;
+    }
+    .post hr
+    {
+        margin: 1em 0;
+    }
+    .pid
+    {
+        margin-bottom: 5px;
     }
     .arrow
     {
