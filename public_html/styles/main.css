@@ -1,9 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
 *
 {
     margin: 0;
     padding: 0;
-    font-family: "Montserrat", sans-serif;
+    font-family: "Open Sans", sans-serif;
 }
 body
 {
@@ -37,6 +38,10 @@ a
 {
     color: #66f;
     text-decoration: none;
+}
+a:visited
+{
+    color: #a0f;
 }
 a:hover
 {
