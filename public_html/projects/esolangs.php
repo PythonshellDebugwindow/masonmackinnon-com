@@ -11,12 +11,14 @@
             <option value="dashes">—- (Dashes)</option>
             <option value="base2">Base2</option>
             <option value="bout">Bout</option>
-            <option value="depend">Depend</option>
+            <option value="depend" selected>Depend</option>
             <option value="linefeed">Line Feed</option>
             <option value="pom">PlusOrMinus</option>
         </select>
         <h2>Code:</h2>
-        <textarea id="codebox"></textarea>
+        <textarea id="codebox">0->2
+2->1
+1-></textarea>
         <h2>Input:</h2>
         <textarea id="input"></textarea>
         <button id="run">Run</button>
@@ -24,6 +26,10 @@
         <textarea id="output"></textarea>
     </div>
 </section>
+
+<script src="base2.js"></script>
+<script src="plus-or-minus.js"></script>
+<script src="depend.js"></script>
 
 <script>
     var languageSwitch = document.getElementById("language");
@@ -67,6 +73,9 @@
             case "":
                 (code);
                 break;
+            default:
+                output = "Please choose a valid language";
+                break;
         }
         
         outputBox.value = output;
@@ -82,6 +91,18 @@
         resize: vertical;
         padding: 5px;
         font-family: "Courier New", "Courier", monospace;
+    }
+    #run
+    {
+        padding: 5px;
+        margin-top: 5px;
+        border-radius: 5px;
+        background: #fff;
+        border: 1px solid #000;
+    }
+    #run:hover
+    {
+        background: #f0f0f0;
     }
 </style>
 <?php include_once('../../includes/footer.php'); ?>
