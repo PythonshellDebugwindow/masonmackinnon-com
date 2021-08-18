@@ -1,7 +1,7 @@
 <?php
     $title = 'Log Out';
     include_once("../../includes/header.php");
-    session_start();
+    @session_start();
     unset($_SESSION['id']);
     unset($_SESSION['name']);
     session_destroy();

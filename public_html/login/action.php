@@ -46,7 +46,7 @@ if($submitted)
     if(mysqli_num_rows($u) == 1)
     {
         //Logged in successfully
-        session_start();
+        @session_start();
         $row = mysqli_fetch_array($u, MYSQLI_ASSOC);
         $_SESSION['id'] = $row['id'];
         $_SESSION['name'] = $row['name'];
