@@ -1,11 +1,27 @@
 <!-- Comments -->
 <section class="comments">
+    <?php
+        if(isset($_GET['acf']))
+            echo '<h4>Error: Could not add comment</h4>';
+        
+        function endsWith($haystack, $needle)
+        {
+            $length = strlen($needle);
+            if(!$length) return true;
+            return substr($haystack, -$length) === $needle;
+        }
+        
+        $pageloc = $_SERVER['REQUEST_URI'];
+        $pageloc = strtok($pageloc, '?'); //Remove GET arguments
+        $pageloc = strtok($pageloc, '#'); //Remove fragment identifier
+        if(endswith($pageloc, 'index.php')) $pageloc = substr($pageloc, 0, -9); //Remove index.php
+        
+        if($pageloc === "/view-replies.php")
+            goto endComments;
+    ?>
     <h2>Comments</h2>
     <div>
         <?php
-            if(isset($_GET['acf']))
-                echo '<h4>Error: Could not add comment</h4>';
-            
             if(!in_array("home/ymyri0wen43m/connect_db.php", get_included_files()))
             {
                 include_once('/home/ymyri0wen43m/connect_db.php');
@@ -18,6 +34,8 @@
                 goto endComments;
             }
             
+            $pageloc = mysqli_real_escape_string($dbc, $pageloc);
+            
             $r = mysqli_query($dbc, 'USE masonmackinnon');
             if(!$r)
             {
@@ -25,17 +43,6 @@
                 goto endComments;
             }
             
-            function endsWith($haystack, $needle)
-            {
-                $length = strlen($needle);
-                if(!$length) return true;
-                return substr($haystack, -$length) === $needle;
-            }
-            
-            $pageloc = mysqli_real_escape_string($dbc, $_SERVER['REQUEST_URI']);
-            $pageloc = strtok($pageloc, '?'); //Remove GET arguments
-            $pageloc = strtok($pageloc, '#'); //Remove fragment identifier
-            if(endswith($pageloc, 'index.php')) $pageloc = substr($pageloc, 0, -9); //Remove index.php
             $r = mysqli_query($dbc, 'SELECT id, user_id, content, date, num_replies FROM comments WHERE location = "' . $pageloc . '" AND reply_to = 0');
             if(!$r)
             {
@@ -48,29 +55,24 @@
                 $ur = mysqli_query($dbc, 'SELECT name FROM users WHERE id = ' . $row['user_id']);
                 echo '<div class="comment"><p>';
                 echo $row['content'] . '</p>';
-                if($row['num_replies'] !== "0")
-                {
-                    echo '<a href="/view-replies.php?cid=' . $row['id'] . '" target="_blank">';
-                    echo "View ${row['num_replies']} replies</a>";
-                }
-                echo '<form method="POST" action="/add_comment.php">
-                    <h4>Reply</h4>
-                    <textarea class="content-ta-r" name="content" oninput="checkRemaining(this);"></textarea>
-                    <p><span class="remaining-s-r"><noscript>Please enable JavaScript</noscript></span>/256</p>
-                    <input type="hidden" name="origin" value="' . $pageloc . '">
-                    <input type="hidden" name="replyto" value="' . $row['id'] . '">
-                    <input type="submit" value="Submit">
-                </form>';
                 echo '</div>';
+                
                 if($ur && mysqli_num_rows($ur) > 0)
                     echo mysqli_fetch_array($ur, MYSQLI_ASSOC)['name'] . ' &bull; ';
                 echo $row['date'];
+                
+                echo ' &bull; <a href="/view-replies.php?cid=' . $row['id'] . '" target="_blank">';
+                $yies = $row['num_replies'] === '1' ? 'y' : 'ies';
+                if($row['num_replies'] !== '0')
+                    echo "View ${row['num_replies']} repl$yies</a>";
+                else
+                    echo "Reply</a>";
             }
         ?>
         <form method="POST" action="/add_comment.php">
             <h3>Add a comment</h3>
             <textarea id="content-ta" name="content" oninput="checkRemaining();"></textarea>
-            <p><span id="remaining-s"><noscript>Please enable JavaScript</noscript></span>/256</p>
+            <p><span id="remaining-s">0</span>/256</p>
             <input type="hidden" name="origin" value="<?php echo $pageloc; ?>">
             <input type="hidden" name="replyto" value="0">
             <input type="submit" value="Submit">
@@ -78,14 +80,12 @@
         <script>
             var contentTA = document.getElementById("content-ta");
             var remainingS = document.getElementById("remaining-s");
-            
             function checkRemaining()
             {
                 if(contentTA.value.length > 256)
                     contentTA.value = contentTA.value.substring(0, 256);
                 remainingS.innerHTML = contentTA.value.length;
             }
-            remainingS.innerHTML = 0;
         </script>
         <?php
             endComments:

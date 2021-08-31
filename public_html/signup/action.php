@@ -46,9 +46,9 @@ if($submitted)
     $r = mysqli_query($dbc, 'USE masonmackinnon');
     if(!$r)
         fail();
- 
+    
     $enteredUsername = mysqli_real_escape_string($dbc, $enteredUsername);
-    $enteredPassword = mysqli_real_escape_string($dbc, $enteredPassword);   
+    $enteredPassword = mysqli_real_escape_string($dbc, $enteredPassword);
     $q = "SELECT NULL FROM users WHERE name = '$enteredUsername'";
     
     $u = mysqli_query($dbc, $q);

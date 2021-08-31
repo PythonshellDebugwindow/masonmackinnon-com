@@ -84,3 +84,7 @@ a:hover
 {
     color: #660000;
 }
+.darkred-a
+{
+    color: #660000 !important;
+}

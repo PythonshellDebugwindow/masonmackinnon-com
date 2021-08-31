@@ -3,6 +3,8 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="MasonMackinnon.Com - A website">
+    <meta name="keywords" content="masonmackinnon,masonmackinnon.com,mason mackinnon,pythonshelldebugwindow">
     <title><?php echo "$title"; if("$title" != "") echo " | " ?>MasonMackinnon.Com</title>
     <link rel="stylesheet" href="/styles/main.css" />
     <link rel="stylesheet" href="/styles/header.css" />
@@ -21,8 +23,7 @@
 <div class="header-top">
     <a href="/">
         <img src="/favicon-3.png">
-        <!-- Div is for responsiveness (see style) -->
-        <h1><span class="mmk">MasonMacKinnon</span>.Com<div class="toggle inline-toggle"></div></h1>
+        <h1><span class="mmk">MasonMacKinnon</span>.Com<span class="toggle inline-toggle"></span></h1>
     </a>
     <div class="toggle main-toggle"></div>
     <ul>

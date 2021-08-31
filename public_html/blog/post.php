@@ -84,14 +84,67 @@
                 echo "$timeStrDate at $timeStrTime</p>";
             }
             
+            echo '<div id="post-links">';
+            if($foundPost)
+            {
+                if($id > 1)
+                {
+                    echo '<a id="left" href="post.php?p=' . ($id - 1);
+                    if($isTLAO)
+                        echo '&t';
+                    echo '"><img class="arrow" src="../images/arrow-left.png">';
+                    echo 'Previous</a>';
+                }
+                $id = $_GET['p'];
+                $db = $isTLAO ? 'tlao' : 'blog';
+                $q = "SELECT null FROM $db";
+                $r = mysqli_query($dbc, $q);
+                if($r && $id < mysqli_num_rows($r))
+                {
+                    echo '<a id="right" href="post.php?p=' . ($id + 1);
+                    if($isTLAO)
+                        echo '&t';
+                    echo '">Next';
+                    echo '<img class="arrow" src="../images/arrow-right.png">';
+                    echo '</a>';
+                }
+            }
+            
             $u = '/blog/';
             if($isTLAO)
                 $u .= '?t';
-            echo '<a href="' . $u . '">';
-            echo '<img class="arrow" src="../images/arrow-left.png">Go Back</a>';
+            
+            echo '<a id="back" href="' . $u . '">';
+            echo '<img class="arrow" src="../images/arrow-left.png">';
+            echo 'Go Back</a>';
+            echo '</div>';
         ?>
     </div>
 </section>
+
+<script>
+    function makeToggleClass(el)
+    {
+        return function()
+        {
+            var cl = el.className;
+            if(el.className.split(" ").indexOf("active") > 0)
+                el.className = el.className.replace("active", "");
+            else
+                el.className = el.className + " active";
+        }
+    }
+    var split = document.getElementsByClassName("split");
+    var children;
+    for(var i = 0; i < split.length; ++i)
+    {
+        children = split[i].children;
+        for(var j = 0; j < children.length; ++j)
+        {
+            children[j].onclick = makeToggleClass(children[j]);
+        }
+    }
+</script>
 
 <style>
     .post
@@ -108,20 +161,62 @@
         white-space: pre-wrap;
         text-align: justify;
     }
+    
     .split
     {
         display: flex;
-        justify-content: space-between;
-        /*width: 50%;*/
+        flex-direction: column;
+        width: 100%;
         /*border: 1px solid #000;*/
-        background: #f9f9f9;
         padding: 20px 10px;
-        margin: 10px 0;
     }
     .split > div
     {
+        background: #f9f9f9;
         padding: 20px 10px;
-        width: 50%;
+        margin: 10px 0;
+        width: 100%;
+        height: 0;
+        overflow-y: hidden;
+    }
+    .split > div::before,
+    .split > div::after
+    {
+        display: -moz-inline-block;
+        display: inline-block;
+        -o-transform: translateY(-50%);
+        -moz-transform: translateY(-50%);
+        -webkit-transform: translateY(-50%);
+        transform: translateY(-50%);
+        font-size: 1.2em;
+    }
+    .split > div.active
+    {
+        height: initial;
+    }
+    .split > div:nth-child(1)::before
+    {
+        content: 'Python \02C5';
+    }
+    .split > div.active:nth-child(1)::before
+    {
+        content: 'Python \02C4';
+    }
+    .split > div:nth-child(2)::before
+    {
+        content: 'JavaScript \02C5';
+    }
+    .split > div.active:nth-child(2)::before
+    {
+        content: 'JavaScript \02C4';
+    }
+    .split > div.mb:nth-child(2)::before
+    {
+        content: 'Malbolge \02C5';
+    }
+    .split > div.mb.active:nth-child(2)::before
+    {
+        content: 'Malbolge \02C4';
     }
     .split > div span
     {
@@ -129,10 +224,7 @@
         font-size: 1.2em;
         margin-bottom: 10px;
     }
-    .split > div:nth-child(1)
-    {
-        border-right: 1px solid #000;
-    }
+    
     .post pre,
     .post code
     {
@@ -153,6 +245,20 @@
     {
         margin: 1em 0;
     }
+    table
+    {
+        border-collapse: collapse;
+        border-spacing: 0;
+    }
+    table thead td
+    {
+        font-weight: bold;
+    }
+    table td
+    {
+        border: 1px solid rgba(1,1,1,0.5);
+        padding: 5px;
+    }
     .pid
     {
         margin-bottom: 5px;
@@ -162,5 +268,53 @@
         height: 0.8em;
         margin-right: 5px;
     }
+    #post-links
+    {
+        position: relative;
+        padding: 30px 0;
+    }
+    #post-links a
+    {
+        position: absolute;
+        font-size: 1.1em;
+    }
+    #left
+    {
+        left: 0;
+    }
+    #left .arrow
+    {
+        margin-right: 10px;
+    }
+    #right
+    {
+        right: 0;
+    }
+    #right .arrow
+    {
+        margin-left: 10px;
+    }
+    #back
+    {
+        left: 50%;
+        -o-transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%);
+        -moz-transform: translate(-50%, -50%);
+        -webkit-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
+    }
+    #back .arrow
+    {
+        display: block;
+        left: 50%;
+        -o-transform: translate(50%, -50%) rotate(90deg);
+        -ms-transform: translate(50%, -50%) rotate(90deg);
+        -moz-transform: translate(50%, -50%) rotate(90deg);
+        -webkit-transform: translate(50%, -50%) rotate(90deg);
+        transform: translate(50%, -50%) rotate(90deg);
+        margin-bottom: 10px;
+    }
+    @media (max-width: 1991px)
+    {}
 </style>
 <?php include_once('../../includes/footer.php'); ?>

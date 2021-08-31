@@ -1,12 +1,17 @@
 <?php
     $title = 'Terrain Generator | Miscellany';
-    include_once("../../includes/header.php");
+    include_once("../../includes/header.php")
 ?>
-<section>
+<section style="position: relative">
     <h1>Terrain Generator</h1>
     <p id="gen-msg">Generating...</p>
     <noscript>This page needs JavaScript to work.</noscript>
     <div class="square-container"></div>
+    <div class="range-holder">
+        <span>North Pacific</span>
+        <input type="range" min="0" max="1" value="0.1" step="0.001" onchange="slider(this.value)">
+        <span>Coastal Himalayas</span>
+    </div>
 </section>
 
 <style>
@@ -52,6 +57,26 @@
     {
         background: #ddd;
     }
+    .square-5
+    {
+        background: #fff;
+    }
+    .range-holder
+    {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        margin-top: 25px;
+        box-sizing: border-box;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    input[type="range"]
+    {
+        width: 50%;
+        margin: 0 20px;
+    }
 </style>
 <script>
     const squareContainer = document.querySelector(".square-container");
@@ -62,13 +87,15 @@
     
     function putSquares()
     {
-        let containerWidth = squareContainer.clientWidth;
-        let containerHeight = squareContainer.clientHeight;
+        squares = [];
         
-        for(let i = 0; i < containerWidth; i += squareSize)
+        var containerWidth = squareContainer.clientWidth;
+        var containerHeight = squareContainer.clientHeight;
+        
+        for(var i = 0; i < containerWidth; i += squareSize)
         {
             ++numSquaresPerRow;
-            for(let j = 0; j < containerHeight; j += squareSize)
+            for(var j = 0; j < containerHeight; j += squareSize)
             {
                 squares.push(0);
             }
@@ -76,15 +103,15 @@
     }
     function genTerrain()
     {
-        let numSquaresToIter = squares.length - numSquaresPerRow - 1;
+        var numSquaresToIter = squares.length - numSquaresPerRow - 1;
         
-        for(let i = 1; i < numSquaresToIter; ++i)
+        for(var i = 1; i < numSquaresToIter; ++i)
         {
             if(Math.random() < freq)
             {
-                for(let j = -1; j <= 1; ++j)
+                for(var j = -1; j <= 1; ++j)
                 {
-                    for(let k = -1; k <= 1; ++k)
+                    for(var k = -1; k <= 1; ++k)
                     {
                         if(Math.random() < 0.4)
                         {
@@ -95,7 +122,7 @@
             }
         }
         
-        for(let i = 1; i < numSquaresToIter; ++i)
+        for(var i = 1; i < numSquaresToIter; ++i)
         {
             if(squares[i] === 0)
             {
@@ -108,24 +135,23 @@
                 else
                 {        
                     makeDeepOcean: {
-                        for(let j = -2; j <= 2; ++j)
+                        for(var j = -2; j <= 2; ++j)
                         {
-                            for(let k = -2; k <= 2; ++k)
+                            for(var k = -2; k <= 2; ++k)
                             {
-                                let n = i + j + (k * numSquaresPerRow);
+                                var n = i + j + (k * numSquaresPerRow);
                                 if(squares[n] > 0)
                                     break makeDeepOcean;
                             }
                         }
                         squares[i] = -1;
                     };
-                    makeHighMountain:
-                    {
-                        for(let j = -2; j <= 2; ++j)
+                    makeHighMountain: {
+                        for(var j = -2; j <= 2; ++j)
                         {
-                            for(let k = -2; k <= 2; ++k)
+                            for(var k = -2; k <= 2; ++k)
                             {
-                                let n = i + j + (k * numSquaresPerRow);
+                                var n = i + j + (k * numSquaresPerRow);
                                 if(squares[n] < 3)
                                     break makeHighMountain;
                             }
@@ -138,21 +164,33 @@
     }
     function renderSquares()
     {
-        for(let i = 0; i < squares.length; ++i)
+        while(squareContainer.children.length > 0)
+            squareContainer.children[0].remove();
+        squareContainer.innerHTML = "";
+        
+        for(var i = 0; i < squares.length; ++i)
         {
-            let square = document.createElement("div");
+            var square = document.createElement("div");
             square.classList.add("square");
-            let squareName = squares[i] < 0 ? "deep" : squares[i];
+            var squareName = squares[i] < 0 ? "deep" : squares[i];
+            if(squares[i] > 5)
+                squareName = "5";
             square.classList.add("square-" + squareName);
             squareContainer.appendChild(square);
         }
     }
     
-    window.onload = function()
+    function slider(v)
     {
+        freq = v;
         putSquares();
         genTerrain();
         renderSquares();
+    }
+    
+    window.onload = function()
+    {
+        slider(freq);
     };
 </script>
 <?php include_once("../../includes/footer.php") ?>

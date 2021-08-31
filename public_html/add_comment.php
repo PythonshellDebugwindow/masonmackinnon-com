@@ -1,9 +1,10 @@
 <?php
 session_start();
 
-function fail()
+function leave($acf)
 {
-    header('Location: ' . 'http://masonmackinnon.com' . $_POST['origin'] . '?acf', true, 301);
+    $a = $acf ? '?acf' : '';
+    header('Location: ' . 'http://masonmackinnon.com' . $_POST['origin'] . $a, true, 301);
     exit();
 }
 
@@ -12,30 +13,39 @@ if($_SERVER['REQUEST_METHOD'] !== 'POST')
 if(!isset($_POST['origin']))
     exit();
 if(!isset($_POST['content']) || !isset($_POST['replyto']))
-    fail();
+    leave(true);
+
+if($_POST['content'] === "")
+    leave(false);
 
 include_once('../connect_db.php');
 $dbc = connect();
 if(mysqli_connect_errno())
-    fail();
+    leave(true);
 
 $r = mysqli_query($dbc, 'USE masonmackinnon');
 if(!$r)
-    fail();
+    leave(true);
 
 $userId = (isset($_SESSION['id']) && ctype_digit($_SESSION['id'])) ? $_SESSION['id'] : 0;
 $replyTo = $_POST['replyto'];
 if(!ctype_digit($replyTo))
-    fail();
+    leave(true);
 $replyTo = intval($replyTo);
 $c = htmlspecialchars(mysqli_real_escape_string($dbc, $_POST['content']));
 
 $loc = mysqli_real_escape_string($dbc, $_POST['origin']);
-$loc = $replyTo === 0 ? "" : $loc;
+$loc = $replyTo === 0 ? $loc : "";
 
 $r = mysqli_query($dbc, "INSERT INTO comments (user_id, content, location, date, reply_to) VALUES ($userId, '$c', '$loc', NOW(), $replyTo)");
 if(!$r)
-    fail();
+    leave(true);
 
-header('Location: ' . 'http://masonmackinnon.com' . $_POST['origin'], true, 301);
-exit();
+if($replyTo !== 0)
+{
+    $f = mysqli_query($dbc, "UPDATE comments SET num_replies = num_replies + 1 WHERE id = $replyTo");
+    if(!$f)
+        leave(true);
+}
+
+leave(false);

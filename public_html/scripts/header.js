@@ -6,6 +6,7 @@ function toggle()
 {
     document.body.classList.toggle("toggle-active");
     mainToggle.classList.toggle("active");
+    inlineToggle.classList.toggle("active");
     ul.classList.toggle("active");
     return false; //Stop propagation
 }

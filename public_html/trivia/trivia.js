@@ -23,10 +23,18 @@ function updateHtmlForNthQuestion(n)
         answerDiv.classList.remove("guess-wrong");
         let span = answerDiv.children[0];
         span.innerText = questions[n]["ans" + (i + 1)];
-        answerDiv.onclick = () => handleNthQuestionClicked(i);
+        answerDiv.onclick = makeHandleNthQuestionClicked(i);
     }
     
     curCorrectAnswer = parseInt(questions[n].correct);
+}
+
+function makeHandleNthQuestionClicked(i)
+{
+    return function()
+    {
+        handleNthQuestionClicked(i);
+    };
 }
 
 function handleNthQuestionClicked(n)
@@ -55,7 +63,7 @@ function handleNthQuestionClicked(n)
             updateHtmlForNthQuestion(curQuestion);
         else
             endGame();
-    },500);
+    }, 500);
 }
 
 function endGame()

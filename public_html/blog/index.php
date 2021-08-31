@@ -24,7 +24,10 @@
             }
             function shorten($text, $len = 50)
             {
-                return substr($text, 0, $len) . '...';
+                $s = substr($text, 0, $len) . '...';
+                if(strpos($s, '<a') !== false)
+                    $s .= strpos($s, '">') === false ? '"></a> ' : '</a>';
+                return $s;
             }
             
             require('../../connect_db.php');

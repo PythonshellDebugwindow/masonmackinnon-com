@@ -36,6 +36,8 @@ if($submitted)
     if(!$r)
         fail();
     
+    $enteredUsername = mysqli_real_escape_string($dbc, $enteredUsername);
+    $enteredPassword = mysqli_real_escape_string($dbc, $enteredPassword);
     $hashedPassword = hash('sha224', $enteredPassword);
     $q = "SELECT id, name FROM users WHERE name = '$enteredUsername' AND pass = '$hashedPassword'";
     

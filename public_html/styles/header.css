@@ -30,6 +30,10 @@
 {
     font-variant: small-caps;
     font-size: 2em;
+    -o-transform: translateY(0.1em);
+    -ms-transform: translateY(0.1em);
+    -moz-transform: translateY(0.1em);
+    -webkit-transform: translateY(0.1em);
     transform: translateY(0.1em);
 }
 .header-top ul
@@ -62,9 +66,10 @@
 
 @media (max-width: 1303px)
 {
-    body.toggle-active
+    body.toggle-active .header-top
     {
-        overflow: hidden;
+        position: fixed;
+        z-index: 500;
     }
     .header-top .toggle
     {
@@ -93,22 +98,37 @@
     }
     .header-top .toggle::before
     {
+        -o-transform: translateY(-13px);
+        -ms-transform: translateY(-13px);
+        -moz-transform: translateY(-13px);
+        -webkit-transform: translateY(-13px);
         transform: translateY(-13px);
         box-shadow: 0px 12px 0 0px #ddd;
     }
     .header-top .toggle::after
     {
+        -o-transform: translateY(8px);
+        -ms-transform: translateY(8px);
+        -moz-transform: translateY(8px);
+        -webkit-transform: translateY(8px);
         transform: translateY(8px);
     }
     .header-top .toggle.active::before
     {
+        -o-transform: translateY(-1px) rotate(45deg);
+        -ms-transform: translateY(-1px) rotate(45deg);
+        -moz-transform: translateY(-1px) rotate(45deg);
+        -webkit-transform: translateY(-1px) rotate(45deg);
         transform: translateY(-1px) rotate(45deg);
         box-shadow: none;
     }
     .header-top .toggle.active::after
     {
+        -o-transform: translateY(-4px) rotate(-45deg);
+        -ms-transform: translateY(-4px) rotate(-45deg);
+        -moz-transform: translateY(-4px) rotate(-45deg);
+        -webkit-transform: translateY(-4px) rotate(-45deg);
         transform: translateY(-4px) rotate(-45deg);
-        transition: 0.2s;
     }
     .header-top ul
     {
@@ -116,7 +136,7 @@
     }
     .header-top ul.active
     {
-        position: absolute;
+        position: fixed;
         left: 0;
         right: 0;
         top: 100px;
@@ -125,6 +145,8 @@
         display: flex;
         flex-direction: column;
         background: #fff;
+        justify-content: space-between;
+        height: auto;
     }
     .header-top ul.active li
     {
@@ -169,11 +191,39 @@
     .header-top a h1 .inline-toggle
     {
         display: inline;
+        -o-transform: scale(0.8);
+        -ms-transform: scale(0.8);
+        -moz-transform: scale(0.8);
+        -webkit-transform: scale(0.8);
         transform: scale(0.8);
-        top: 0;
+        position: absolute;
+        top: 60%;
     }
     .header-top .main-toggle
     {
         display: none;
+    }
+}
+@media (max-width: 358px)
+{
+    .header-top a h1
+    {
+        -o-transform: translateX(-20%);
+        -ms-transform: translateX(-20%);
+        -moz-transform: translateX(-20%);
+        -webkit-transform: translateX(-20%);
+        transform: translateX(-20%);
+        position: relative;
+        left: 10px;
+    }
+    .header-top a h1 .inline-toggle
+    {
+        -o-transform: none;
+        -ms-transform: none;
+        -moz-transform: none;
+        -webkit-transform: none;
+        transform: none;
+        top: 25%;
+        left: 85%;
     }
 }
